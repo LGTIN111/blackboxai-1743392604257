@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Urban Tree Management - Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body class="bg-gray-100 min-h-screen">
+    <nav class="bg-white shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex">
+                    <div class="flex-shrink-0 flex items-center">
+                        <span class="text-xl font-bold text-green-600">Urban Tree</span>
+                    </div>
+                </div>
+                <div class="flex items-center">
+                    <button id="logoutBtn" class="text-gray-500 hover:text-gray-700 px-3 py-2 rounded-md text-sm font-medium">
+                        Logout
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <header class="bg-white shadow">
+        <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+            <h1 class="text-3xl font-bold text-gray-900">Dashboard</h1>
+        </div>
+    </header>
+
+    <main>
+        <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+            <div class="px-4 py-6 sm:px-0">
+                <div class="border-4 border-dashed border-gray-200 rounded-lg p-6">
+                    <div class="text-center mb-8">
+                        <h2 class="text-xl font-semibold mb-4">Welcome to Urban Tree Management</h2>
+                        <p class="mb-6">You are successfully logged in!</p>
+                        <div id="userEmail" class="text-green-600 font-medium mb-6"></div>
+                        <a href="data-entry.html" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
+                            Add New Tree Data
+                        </a>
+                    </div>
+                    
+                    <div>
+                        <h3 class="text-lg font-medium text-gray-900 mb-4">Your Tree Records</h3>
+                        <div id="treeList" class="space-y-4">
+                            <!-- Tree records will be dynamically inserted here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Display logged in user's email
+            const loggedInUser = JSON.parse(sessionStorage.getItem('loggedInUser') || localStorage.getItem('loggedInUser'));
+            if (loggedInUser) {
+                document.getElementById('userEmail').textContent = loggedInUser.email;
+            } else {
+                // Redirect to login if not logged in
+                window.location.href = 'login.html';
+            }
+
+            // Logout button
+            document.getElementById('logoutBtn').addEventListener('click', function() {
+                sessionStorage.removeItem('loggedInUser');
+                localStorage.removeItem('loggedInUser');
+                window.location.href = 'login.html';
+            });
+        });
+    </script>
+</body>
+</html>
