@@ -182,10 +182,22 @@ function validateEmail(email) {
     return re.test(email);
 }
 
-function showError(elementId, message) {
+// Các thông báo lỗi bằng tiếng Việt
+const errorMessages = {
+    email: {
+        invalid: 'Vui lòng nhập email hợp lệ',
+        exists: 'Email đã được đăng ký'
+    },
+    password: {
+        length: 'Mật khẩu phải có ít nhất 8 ký tự',
+        mismatch: 'Mật khẩu không khớp'
+    }
+};
+
+function showError(elementId, messageKey) {
     const element = document.getElementById(elementId);
     if (element) {
-        element.textContent = message;
+        element.textContent = errorMessages[elementId.replace('Error', '').toLowerCase()][messageKey] || messageKey;
         element.style.display = 'block';
     }
 }
@@ -195,4 +207,38 @@ function hideError(elementId) {
     if (element) {
         element.style.display = 'none';
     }
+}
+
+// Cập nhật các thông báo trong hàm xử lý
+function handleLogin() {
+    // ... giữ nguyên logic xử lý
+    if (!validateEmail(email)) {
+        showError('emailError', 'invalid');
+        return;
+    }
+    
+    if (password.length < 8) {
+        showError('passwordError', 'length');
+        return;
+    }
+    // ... tiếp tục các xử lý khác
+}
+
+function handleSignup() {
+    // ... giữ nguyên logic xử lý
+    if (!validateEmail(email)) {
+        showError('emailError', 'invalid');
+        return;
+    }
+    
+    if (password.length < 8) {
+        showError('passwordError', 'length');
+        return;
+    }
+    
+    if (password !== confirmPassword) {
+        showError('confirmPasswordError', 'mismatch');
+        return;
+    }
+    // ... tiếp tục các xử lý khác
 }
